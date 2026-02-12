@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    private let env: AppEnvironment
+    @StateObject private var appState: AppState
+
+    init(env: AppEnvironment = .ui()) {
+        self.env = env
+        _appState = StateObject(wrappedValue: AppState(env: env))
+    }
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        RootView(env: env)
+            .environmentObject(appState)
     }
 }
 

@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct CTSAppApp: App {
+    private let env: AppEnvironment
+    @StateObject private var appState: AppState
+
+    init() {
+        let env = AppEnvironment.ui()
+        self.env = env
+        _appState = StateObject(wrappedValue: AppState(env: env))
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView(env: env)
+                .environmentObject(appState)
         }
     }
 }
